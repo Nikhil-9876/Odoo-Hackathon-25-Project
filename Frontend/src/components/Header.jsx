@@ -43,13 +43,7 @@ function Header() {
 
   const navLinks = [
     { to: "/", label: "Home", icon: <FaHome className="mr-2" /> },
-    { to: "/about", label: "About", icon: <FaCogs className="mr-2" /> },
-    {
-      to: "/Results",
-      label: "Results",
-      icon: <FaChartLine className="mr-2" />,
-    },
-    { to: "/help", label: "Help", icon: <FaQuestionCircle className="mr-2" /> },
+    { to: "/profile", label: "Profile", icon: <FaQuestionCircle className="mr-2" /> },
   ];
 
   if (auth?.accessToken) {
@@ -68,7 +62,11 @@ function Header() {
         className="fixed top-0 w-full z-50 py-3 shadow-sm bg-white/70 backdrop-blur-md border-b border-gray-200"
       >
         <Container fluid className="pl-0 sm:pl-8">
-          <Navbar.Brand as={Link} to="/" className="flex items-center mx-4 mr-auto">
+          <Navbar.Brand
+            as={Link}
+            to="/"
+            className="flex items-center mx-4 mr-auto"
+          >
             <span className="text-3xl font-bold bg-black bg-clip-text text-transparent">
               QuizWhiz
             </span>
@@ -89,12 +87,12 @@ function Header() {
             <ul className="nav__items">
               {navLinks.map(({ to, label, icon }) => (
                 <li key={label} className="nav__item border-b border-gray-200">
-                  <NavLink 
-                    to={to} 
-                    className="nav__item-text" 
+                  <NavLink
+                    to={to}
+                    className="nav__item-text"
                     onClick={toggleMenu}
                     style={({ isActive }) => ({
-                      color: isActive ? '#4f6dff' : '#333'
+                      color: isActive ? "#4f6dff" : "#333",
                     })}
                   >
                     {icon} {label}
@@ -109,7 +107,7 @@ function Header() {
                       className="nav__item-text"
                       onClick={toggleMenu}
                       style={({ isActive }) => ({
-                        color: isActive ? '#4f6dff' : '#333'
+                        color: isActive ? "#4f6dff" : "#333",
                       })}
                     >
                       Sign in
@@ -121,7 +119,7 @@ function Header() {
                       className="nav__item-text"
                       onClick={toggleMenu}
                       style={({ isActive }) => ({
-                        color: isActive ? '#4f6dff' : '#333'
+                        color: isActive ? "#4f6dff" : "#333",
                       })}
                     >
                       Sign up
@@ -135,7 +133,7 @@ function Header() {
                     className="nav__item-text"
                     onClick={toggleMenu}
                     style={({ isActive }) => ({
-                      color: isActive ? '#4f6dff' : '#333'
+                      color: isActive ? "#4f6dff" : "#333",
                     })}
                   >
                     Profile
@@ -150,34 +148,21 @@ function Header() {
             id="basic-navbar-nav"
             className="w-full justify-center ml-40"
           >
-            <Nav className="mx-auto flex items-center gap-6">
-              {navLinks.map(({ to, label, icon }) => (
-                <Nav.Link
-                  key={label}
-                  as={NavLink}
-                  to={to}
-                  className="flex items-center text-gray-800 hover:text-blue-600 transition-colors"
-                >
-                  {icon} {label}
-                </Nav.Link>
-              ))}
-            </Nav>
-
             {/* Desktop Auth Section */}
-            <div className="auth-section w-40 ml-5 text-sm mr-5">
+            <div className="auth-section  w-60 ml-5 text-sm fixed right-5">
               {!auth?.accessToken ? (
                 <div className="flex rounded-full border border-gray-200 overflow-hidden">
                   <Nav.Link
                     as={NavLink}
                     to="/sign-in"
-                    className="px-4 py-2 no-underline text-gray-800 hover:text-blue-600 transition-colors"
+                    className="flex-1 px-4 py-2 no-underline text-gray-800 hover:text-blue-600 transition-colors text-center"
                   >
                     Sign in
                   </Nav.Link>
-                  <div className="border-l border-gray-200"></div>
+                  <div className="border-l border-gray-200 h-auto my-1"></div>
                   <NavLink
                     to="/sign-up"
-                    className="px-3 py-2 no-underline text-gray-800 hover:text-blue-600 transition-colors"
+                    className="flex-1 px-4 py-2 no-underline text-gray-800 hover:text-blue-600 transition-colors text-center"
                   >
                     Sign up
                   </NavLink>

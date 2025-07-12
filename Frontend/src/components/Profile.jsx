@@ -1,15 +1,9 @@
 import React, { useState, useEffect } from "react";
-import useAxiosProtected from "../utils/hooks/useAxiosProtected";
-import useAuth from "../utils/hooks/useAuth";
+import SkillRequestsComponent from './SkillRequestsComponent';
 
 function Profile({ onLogout }) {
   const [activeTab, setActiveTab] = useState("profile");
   const [showLogoutMenu, setShowLogoutMenu] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
-  const axiosProtected = useAxiosProtected();
-  const { auth } = useAuth();
-
   const [userProfile, setUserProfile] = useState({
     name: "Marc Demo",
     email: "marc.demo@example.com",
@@ -65,46 +59,11 @@ function Profile({ onLogout }) {
       box-sizing: border-box;
     `;
 
-    // Cleanup on unmount
     return () => {
       document.body.style.cssText = originalBodyStyle;
       document.documentElement.style.cssText = originalHtmlStyle;
     };
   }, []);
-
-  // Fetch profile data on component mount
-  useEffect(() => {
-    if (auth?.username) {
-      fetchProfileData();
-    }
-  }, [auth?.username, axiosProtected]);
-
-  const fetchProfileData = async () => {
-    try {
-      setLoading(true);
-      setError("");
-      const response = await axiosProtected.get(
-        `/profile/${auth.username}/get`
-      );
-
-      if (response.data.success && response.data.user) {
-        const userData = response.data.user;
-        setUserProfile((prev) => ({
-          ...prev,
-          name: userData.username,
-          email: userData.email,
-          skillsOffered: userData.skillOffered || [],
-          skillsWanted: userData.skillWanted || [],
-          rating: userData.userRating || 0,
-        }));
-      }
-    } catch (error) {
-      console.error("Error fetching profile:", error);
-      setError("Failed to load profile data");
-    } finally {
-      setLoading(false);
-    }
-  };
 
   // Close logout menu when clicking outside
   useEffect(() => {
@@ -340,43 +299,9 @@ function Profile({ onLogout }) {
     setEditData({ ...userProfile });
   };
 
-  const handleSave = async () => {
-    try {
-      setLoading(true);
-      setError("");
-
-      // Prepare update data
-      const updateData = {
-        email: editData.email,
-        skillOffered: editData.skillsOffered,
-        skillWanted: editData.skillsWanted,
-      };
-
-      const response = await axiosProtected.post(
-        `/profile/${auth.username}/update`,
-        updateData
-      );
-
-      if (response.data.success) {
-        // Update local state with the response data
-        const userData = response.data.user;
-        setUserProfile((prev) => ({
-          ...prev,
-          name: userData.username,
-          email: userData.email,
-          skillsOffered: userData.skillOffered || [],
-          skillsWanted: userData.skillWanted || [],
-          rating: userData.userRating || prev.rating,
-        }));
-        setIsEditing(false);
-        setError(""); // Clear any previous errors
-      }
-    } catch (error) {
-      console.error("Error updating profile:", error);
-      setError("Failed to update profile. Please try again.");
-    } finally {
-      setLoading(false);
-    }
+  const handleSave = () => {
+    setUserProfile({ ...editData });
+    setIsEditing(false);
   };
 
   const handleCancel = () => {
@@ -483,52 +408,20 @@ function Profile({ onLogout }) {
               onChange={(e) => handleInputChange("bio", e.target.value)}
               placeholder="Bio"
             />
-
-            {/* Error Display */}
-            {error && (
-              <div
-                style={{
-                  color: "#dc2626",
-                  fontSize: "14px",
-                  padding: "8px",
-                  backgroundColor: "#fef2f2",
-                  border: "1px solid #fecaca",
-                  borderRadius: "4px",
-                  marginBottom: "8px",
-                }}
-              >
-                {error}
-              </div>
-            )}
-
             <div style={{ display: "flex", gap: "8px" }}>
               <button
-                style={{
-                  ...buttonStyle,
-                  opacity: loading ? 0.6 : 1,
-                  cursor: loading ? "not-allowed" : "pointer",
-                }}
+                style={buttonStyle}
                 onClick={handleSave}
-                disabled={loading}
-                onMouseOver={(e) =>
-                  !loading && (e.target.style.background = "#2563eb")
-                }
-                onMouseOut={(e) =>
-                  !loading && (e.target.style.background = "#3b82f6")
-                }
+                onMouseOver={(e) => (e.target.style.background = "#2563eb")}
+                onMouseOut={(e) => (e.target.style.background = "#3b82f6")}
               >
-                {loading ? "Saving..." : "Save"}
+                Save
               </button>
               <button
                 style={buttonSecondaryStyle}
                 onClick={handleCancel}
-                disabled={loading}
-                onMouseOver={(e) =>
-                  !loading && (e.target.style.background = "#f9fafb")
-                }
-                onMouseOut={(e) =>
-                  !loading && (e.target.style.background = "white")
-                }
+                onMouseOver={(e) => (e.target.style.background = "#f9fafb")}
+                onMouseOut={(e) => (e.target.style.background = "white")}
               >
                 Cancel
               </button>
@@ -748,22 +641,6 @@ function Profile({ onLogout }) {
 
   return (
     <div style={containerStyle}>
-      {loading && !isEditing && (
-        <div
-          style={{
-            position: "absolute",
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
-            color: "#3b82f6",
-            fontSize: "18px",
-            zIndex: 1000,
-          }}
-        >
-          Loading profile...
-        </div>
-      )}
-
       <div style={headerStyle}>
         <div style={logoStyle}>Skill Swap Platform</div>
         <div style={navStyle}>
@@ -880,9 +757,25 @@ function Profile({ onLogout }) {
             >
               Reviews
             </button>
+            <button
+              style={
+                activeTab === "requests" ? tabButtonActiveStyle : tabButtonStyle
+              }
+              onClick={() => setActiveTab("requests")}
+              onMouseOver={(e) => (e.target.style.color = "#3b82f6")}
+              onMouseOut={(e) =>
+                (e.target.style.color =
+                  activeTab === "requests" ? "#3b82f6" : "#6b7280")
+              }
+            >
+              Requests
+            </button>
           </div>
 
-          {activeTab === "profile" ? renderProfileTab() : renderReviewsTab()}
+          {/* {activeTab === "profile" ? renderProfileTab() : renderReviewsTab()} */}
+          {activeTab === "profile" && renderProfileTab()}
+          {activeTab === "reviews" && renderReviewsTab()}
+          {activeTab === "requests" && <SkillRequestsComponent />}
         </div>
       </div>
     </div>
