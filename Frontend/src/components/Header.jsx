@@ -43,7 +43,11 @@ function Header() {
 
   const navLinks = [
     { to: "/", label: "Home", icon: <FaHome className="mr-2" /> },
-    { to: "/profile", label: "Profile", icon: <FaQuestionCircle className="mr-2" /> },
+    {
+      to: "/profile",
+      label: "Profile",
+      icon: <FaQuestionCircle className="mr-2" />,
+    },
   ];
 
   if (auth?.accessToken) {
@@ -68,7 +72,7 @@ function Header() {
             className="flex items-center mx-4 mr-auto"
           >
             <span className="text-3xl font-bold bg-black bg-clip-text text-transparent">
-              QuizWhiz
+              SkillShare
             </span>
           </Navbar.Brand>
 
@@ -180,9 +184,22 @@ function Header() {
                         className="w-10 h-10 rounded-full border border-gray-300 object-cover"
                       />
                     ) : (
-                      <div className="w-10 h-10 rounded-full border border-gray-300 flex items-center justify-center bg-gray-100">
-                        {userName.charAt(0).toUpperCase()}
-                      </div>
+                      <span className="w-10 h-10 rounded-full border fixed right-5 bottom-5 border-gray-300 flex items-center justify-center">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          strokeWidth={1.5}
+                          stroke="currentColor"
+                          className="w-12 h-12 text-gray-500"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"
+                          />
+                        </svg>
+                      </span>
                     )}
                   </NavLink>
                   {userName}
