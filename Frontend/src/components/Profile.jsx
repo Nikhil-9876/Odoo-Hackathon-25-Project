@@ -5,8 +5,8 @@ function Profile({ onLogout }) {
   const [activeTab, setActiveTab] = useState("profile");
   const [showLogoutMenu, setShowLogoutMenu] = useState(false);
   const [userProfile, setUserProfile] = useState({
-    name: "Marc Demo",
-    email: "marc.demo@example.com",
+    name: "Nikhil Solanki",
+    email: "nikhilsolanki9876@gmail.com",
     profilePhoto: null,
     skillsOffered: ["React", "JavaScript", "Node.js", "Python", "UI/UX Design"],
     skillsWanted: ["Machine Learning", "Data Science", "AWS", "DevOps"],
