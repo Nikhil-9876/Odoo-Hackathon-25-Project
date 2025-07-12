@@ -96,6 +96,7 @@ import Main from "./components/Main"
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Profile from "./components/Profile";
+import AdminDashboard from "./components/Admin";
 
 // Define a layout component
 const Layout = () => {
@@ -138,6 +139,7 @@ const routes = createRoutesFromElements(
       <Route path="sign-up" element={<SignUp />} />
       <Route path="main" element={<Main />} />
       <Route path="profile" element={<Profile />} />
+      <Route path="AdminDashboard" element={<AdminDashboard />} />
 
       {/* Protected */}
       {/* <Route element={<ProtectedRoute />}>

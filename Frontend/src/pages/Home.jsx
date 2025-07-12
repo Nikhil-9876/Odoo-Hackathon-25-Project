@@ -15,7 +15,12 @@ function Home() {
 
   const handleSearch = () => {
     if (searchQuery.trim()) {
-      navigate("/main", { state: { searchQuery } });
+      navigate("/main", {
+        state: {
+          searchQuery: searchQuery.trim(),
+          searchMode: true, // Add this flag to indicate we're in search mode
+        },
+      });
     }
   };
 
