@@ -91,9 +91,11 @@ import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
 import NotFound from "./pages/NotFound";
 import UnAuth from "./pages/UnAuth";
-import Navbar from "./components/Navbar";
+import Header from "./components/Header";
+import Main from "./components/Main"
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Profile from "./components/Profile";
 
 // Define a layout component
 const Layout = () => {
@@ -106,7 +108,7 @@ const Layout = () => {
   
   return (
     <>
-      <Navbar />
+      <Header />
       <div id="outlet">
         <Outlet />
         <ToastContainer
@@ -134,6 +136,8 @@ const routes = createRoutesFromElements(
 
       <Route path="sign-in" element={<SignIn />} />
       <Route path="sign-up" element={<SignUp />} />
+      <Route path="main" element={<Main />} />
+      <Route path="profile" element={<Profile />} />
 
       {/* Protected */}
       {/* <Route element={<ProtectedRoute />}>
