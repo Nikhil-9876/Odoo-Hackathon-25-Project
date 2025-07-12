@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-function Login() {
+function Login({ onLoginSuccess }) {
   const [isLoginMode, setIsLoginMode] = useState(true);
   const [showForgotPassword, setShowForgotPassword] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -286,6 +286,10 @@ function Login() {
       } else if (isLoginMode) {
         setIsLoggedIn(true);
         console.log("Login successful:", formData.email);
+        // Call the onLoginSuccess prop if provided
+        if (onLoginSuccess) {
+          setTimeout(() => onLoginSuccess(), 1000); // Small delay to show success state
+        }
       } else {
         setIsLoginMode(true);
         alert("Account created successfully! Please log in.");
