@@ -4,14 +4,10 @@ import cookieParser from "cookie-parser";
 import { connectMongo } from "./config/db.config.js";
 import authorizationRoutes from "./routes/authorize.routes.js";
 import { configurePassport } from "./config/passport.config.js";
-import dotenv from 'dotenv';
 
 // Set up the server
 const PORT = process.env.PORT || 4000;
 const app = express();
-
-// Load environmental variables
-dotenv.config();
 
 // Connect to MongoDB
 connectMongo();
