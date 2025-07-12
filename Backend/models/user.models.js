@@ -37,6 +37,12 @@ const userSchema = new mongoose.Schema({
     trim: true,
     index: true
   }],
+  userRating: {
+    type: Number,
+    min: 0,
+    max: 5,
+    default: 0
+  },
   createdAt: {
     type: Date,
     default: Date.now,
