@@ -128,14 +128,20 @@ const SkillRequestsComponent = () => {
     return stars;
   };
 
-  const handleRespond = (request) => {
-    alert(`Responding to ${request.requester}'s request for ${request.skillWanted}!`);
-    // Here you would typically open a modal or navigate to a messaging interface
+  const handleAccept = (requestId) => {
+    setRequests(prevRequests => prevRequests.filter(req => req.id !== requestId));
+    setFilteredRequests(prevRequests => prevRequests.filter(req => req.id !== requestId));
+    alert('Request accepted! The request has been removed.');
+  };
+
+  const handleDeny = (requestId) => {
+    setRequests(prevRequests => prevRequests.filter(req => req.id !== requestId));
+    setFilteredRequests(prevRequests => prevRequests.filter(req => req.id !== requestId));
+    alert('Request denied. The request has been removed.');
   };
 
   const handleViewProfile = (request) => {
     alert(`Viewing ${request.requester}'s profile...`);
-    // Here you would typically navigate to the user's profile page
   };
 
   return (
@@ -267,10 +273,16 @@ const SkillRequestsComponent = () => {
                 {/* Action Buttons */}
                 <div className="flex gap-3">
                   <button
-                    onClick={() => handleRespond(request)}
-                    className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium"
+                    onClick={() => handleAccept(request.id)}
+                    className="px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors font-medium"
                   >
-                    Respond
+                    Accept
+                  </button>
+                  <button
+                    onClick={() => handleDeny(request.id)}
+                    className="px-6 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors font-medium"
+                  >
+                    Deny
                   </button>
                   <button
                     onClick={() => handleViewProfile(request)}
