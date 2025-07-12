@@ -6,6 +6,7 @@ import authorizationRoutes from "./routes/authorize.routes.js";
 import { configurePassport } from "./config/passport.config.js";
 import dotenv from "dotenv";
 import { profileRoutes } from "./routes/profile.routes.js";
+import { searchRoutes } from "./routes/search.routes.js";
 dotenv.config();
 
 // Set up the server
@@ -46,6 +47,7 @@ app.post("/api/v1/ping", (req, res) => {
 // Routes
 app.use("/api/v1/authorize", authorizationRoutes);
 app.use("/api/v1/profile", profileRoutes);
+app.use("/api/v1/search", searchRoutes);
 
 app.listen(PORT, () => {
   process.stdout.write(`Server is running at http://localhost:${PORT}\n`);
