@@ -4,6 +4,9 @@ import cookieParser from "cookie-parser";
 import { connectMongo } from "./config/db.config.js";
 import authorizationRoutes from "./routes/authorize.routes.js";
 import { configurePassport } from "./config/passport.config.js";
+import dotenv from "dotenv";
+import { profileRoutes } from "./routes/profile.routes.js";
+dotenv.config();
 
 // Set up the server
 const PORT = process.env.PORT || 4000;
@@ -42,6 +45,7 @@ app.post("/api/v1/ping", (req, res) => {
 
 // Routes
 app.use("/api/v1/authorize", authorizationRoutes);
+app.use("/api/v1/profile", profileRoutes);
 
 app.listen(PORT, () => {
   process.stdout.write(`Server is running at http://localhost:${PORT}\n`);
